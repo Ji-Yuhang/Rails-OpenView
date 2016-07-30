@@ -33,8 +33,11 @@ class RailsOpenViewCommand(sublime_plugin.WindowCommand):
 			base_path = os.path.join(base[:-1])
 			print (base_path)
 			middle_path = base[-1].split("_controller")[0]
-			file_name = base_path[0]+"views/"+middle_path+"/"+view.substr(view.word(text))+".html.erb"
-			buffer = self.window.open_file(file_name)
+			templates = ["erb","slim","haml"]
+			for template in templates:
+				file_name = base_path[0]+"views/"+middle_path+"/"+view.substr(view.word(text))+".html."+template
+				if os.path.isfile(file_name):
+					buffer = self.window.open_file(file_name)
 
 	def run(self):
 		view = self.window.active_view()
